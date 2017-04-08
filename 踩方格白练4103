@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int tag[50][50] = { 0 };
+int ways(int i, int j, int n)//从i，j走n步
+{
+	if (n == 0)
+		return 1;
+	else
+	{
+		int num = 0;
+		tag[i][j] = 1;
+		if (!tag[i][j-1])num += ways(i ,j-1, n - 1);
+		if (!tag[i + 1][j])num += ways(i + 1, j, n - 1);
+		if (!tag[i][j + 1])num += ways(i, j + 1,n-1);
+		tag[i][j] = 0;
+		return num;
+	}
+}
+int main()
+{
+	int n;
+	cin >> n;
+	memset(tag, 0, sizeof(tag));
+	cout << ways(0, 25, n);
+	system("pause");
+	return 0;
+}
