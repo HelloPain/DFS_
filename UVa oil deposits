@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+char field[50][50];
+int block = 0;//八连块个数
+int tag[50][50];
+int m, n;
+void dfs(int i,int j)
+{
+	tag[i][j] = 1;
+	if (i > 0 && field[i - 1][j] == '@' && !tag[i - 1][j]) { dfs(i - 1, j); }
+	if (j>0&&field[i][j-1] == '@' && !tag[i - 1][j]) {  dfs(i - 1, j); }
+	if (i<m-1&&field[i +1][j] == '@' && !tag[i - 1][j]) {  dfs(i - 1, j); }
+	if (j<n-1&&field[i][j +1] == '@' && !tag[i - 1][j]) {  dfs(i - 1, j); }
+	if (i > 0 && j > 0 && field[i - 1][j - 1] == '@' && !tag[i - 1][j-1]) { dfs(i - 1, j-1); }
+	if (i <m-1 && j > 0 && field[i + 1][j - 1] == '@' && !tag[i + 1][j-1]) {  dfs(i + 1, j-1); }
+	if (i <m-1 && j <n-1 && field[i + 1][j + 1] == '@' && !tag[i +1][j+1]) {  dfs(i +1, j+1); }
+	if (i >0 && j <n - 1 && field[i - 1][j + 1] == '@' && !tag[i -1][j+1]) {  dfs(i - 1, j+1); };
+	return;
+}
+int main()
+{
+	
+	cin >> m; cin >> n;
+	memset(tag, 0, sizeof(tag));
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cin >> field[i][j];
+		}
+	}
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (field[i][j] == '@' && !tag[i][j])
+			{
+				dfs(i, j); 
+				block ++ ;
+			}
+		}
+	}
+	cout << block << endl;
+	system("pause");
+	return 0;
+}
